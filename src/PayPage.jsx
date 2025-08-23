@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function CollectPage() {
-  const [friendsToCollect, setFriendsToCollect] = useState([]);
+function PayPage() {
+  const [friendsToPay, setFriendsToPay] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -10,22 +10,22 @@ function CollectPage() {
   const userId = user?.id;
 
   useEffect(() => {
-    const fetchCollectData = async () => {
+    const fetchPayData = async () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:5000/api/friends_expenses/${userId}/collect/details/each`
+          `http://localhost:5000/api/friends_expenses/${userId}/pay/details/each`
         );
         if (!response.ok) throw new Error("failed to fetch");
         const data = await response.json();
-        setFriendsToCollect(data);
+        setFriendsToPay(data);
       } catch (err) {
         console.error("Error fetching collect data:", err);
       } finally {
         setLoading(false);
       }
     };
-    if (userId) fetchCollectData();
+    if (userId) fetchPayData();
   }, [userId]);
 
   if (loading) {
@@ -43,21 +43,21 @@ function CollectPage() {
         className="bg-white rounded-2xl shadow-xl p-8"
       >
         <h1 className="text-2xl font-bold text-gray-800 mb-6">
-          💰 Friends Who Owe You
+          💰 Friends  You Owe
         </h1>
 
-        {friendsToCollect.length === 0 ? (
-          <p className="text-gray-600 text-lg">No pending collections 🎉</p>
+        {friendsToPay.length === 0 ? (
+          <p className="text-gray-600 text-lg">No pending Payments 🎉</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {friendsToCollect.map((friend) => (
+            {friendsToPay.map((friend) => (
               <div
                 key={friend.friend_id}
                 data-aos="fade-up"
                 className="bg-gradient-to-tr from-green-50 to-green-100 rounded-xl p-6 shadow-md hover:shadow-2xl hover:scale-[1.02] transition transform cursor-pointer"
                 onClick={() =>
                   navigate(
-                    `/collect/${userId}/${friend.friend_id}`
+                    `/pay/${userId}/${friend.friend_id}`
                   )
                 }
               >
@@ -76,4 +76,4 @@ function CollectPage() {
   );
 }
 
-export default CollectPage;
+export default PayPage;

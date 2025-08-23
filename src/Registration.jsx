@@ -33,58 +33,78 @@ function Registration() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-blend-color w-screen h-screen">
-      <div className="bg-white h-190 w-150 justify-center items-center absolute top-50 border-10 border-b-gray-500 border-r-gray-500 rounded shadow-md">
-        <div className="text-blue-600 text-4xl bg-gray-100 font-bold">Register</div>
-        <form className="absolute top-50 left-30 block justify-center" onSubmit={handleRegister}>
-          <label className="text-gray-600 text-3xl px-2 py-2">Name:</label>
-          <br />
-          <input
-            className="bg-gray-200 font-serif text-black w-90 h-10 rounded"
-            value={name}
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <br />
-          <label className="text-gray-600 text-3xl px-2 py-2">Email:</label>
-          <br />
-          <input
-            className="bg-gray-200 font-serif text-black w-90 h-10 rounded"
-            value={email}
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <br />
-          <label className="text-gray-600 text-3xl px-2 py-2">Password:</label>
-          <br />
-          <input
-            className="bg-gray-200 rounded text-black w-90 h-10"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <br />
-          <br />
-          <button type="submit" className="text-white w-90 justify-center">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600">
+      <div className="w-full max-w-md p-8 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 animate-fadeInScale">
+        <h2 className="text-3xl font-bold text-center text-white mb-6">Register</h2>
+
+        {message && (
+          <p className="mb-4 text-center text-sm font-medium text-yellow-200">
+            {message}
+          </p>
+        )}
+
+        <form onSubmit={handleRegister} className="space-y-5">
+          <div>
+            <label className="block mb-1 text-sm font-medium text-white">
+              Name
+            </label>
+            <input
+              className="w-full px-4 py-2 text-black rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              value={name}
+              type="text"
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-medium text-white">
+              Email
+            </label>
+            <input
+              className="w-full px-4 py-2 text-black rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              value={email}
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-medium text-white">
+              Password
+            </label>
+            <input
+              className="w-full px-4 py-2 text-black rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-2 mt-4 text-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-300"
+          >
             Register
           </button>
-         
-          <p className="mt-8 text-blue-600 ">
+        </form>
+
+        <p className="mt-6 text-center text-gray-200 text-sm">
           Already have an account?{" "}
-          <a href="/" className="text-blue-600 hover:underline">
+          <a href="/" className="font-semibold text-black hover:underline">
             Login here
           </a>
         </p>
-        </form>
-        
-        <p className="mt-4 text-center text-red-600">{message}</p>
       </div>
     </div>
   );
 }
 
 export default Registration;
+
 

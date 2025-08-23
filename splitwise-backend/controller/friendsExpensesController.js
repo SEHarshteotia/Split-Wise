@@ -129,13 +129,79 @@ const [result] = await pool.query(`
   SELECT fe.id, f.friend_name, fe.amount, fe.category, fe.da_te
   FROM friends_expenses fe
   JOIN friends f ON f.id = fe.friend_id
+  WHERE fe.user_id = ? AND fe.friend_id = ? AND  fe.status = 'to_collect'
+`, [req.params.user_id,req.params.friend_id]);
+
+
+ res.json(result);
+
+});
+
+//@desc detailed_to_pay list 
+const detailedPendingToPay = asyncHandler(async(req,res) => {
+
+const [result] = await pool.query(`
+  SELECT fe.id, f.friend_name, fe.amount, fe.category, fe.da_te
+  FROM friends_expenses fe
+  JOIN friends f ON f.id = fe.friend_id
+  WHERE fe.user_id = ? AND fe.friend_id = ? AND fe.status = 'to_pay'
+`, [req.params.user_id,req.params.friend_id]);
+
+
+ res.json(result);
+
+});
+
+//@ desc  total to_collect from individual friend 
+const PendingToCollectEachFriend = asyncHandler(async(req,res) => {
+
+const [result] = await pool.query(`
+  SELECT f.id AS friend_id, f.friend_name, Sum(fe.amount) AS total_amount 
+  FROM friends_expenses fe
+  JOIN friends f ON f.id = fe.friend_id
   WHERE fe.user_id = ? AND fe.status = 'to_collect'
+  GROUP BY f.id,f.friend_name ORDER BY f.friend_name
 `, [req.params.user_id]);
 
 
  res.json(result);
 
 });
+
+//@ desc  total to_Pay to  individual friend 
+const PendingToPayEachFriend = asyncHandler(async(req,res) => {
+
+const [result] = await pool.query(`
+  SELECT f.id AS friend_id, f.friend_name, Sum(fe.amount) AS total_amount 
+  FROM friends_expenses fe
+  JOIN friends f ON f.id = fe.friend_id
+  WHERE fe.user_id = ? AND fe.status = 'to_pay'
+  GROUP BY f.id,f.friend_name ORDER BY f.friend_name
+`, [req.params.user_id]);
+
+
+ res.json(result);
+
+});
+
+const friendsDetailsPage  = asyncHandler(async(req,res) => {
+  const [result] = await pool.query(`
+  SELECT fe.id, f.friend_name, fe.amount, fe.category, fe.da_te
+  FROM friends_expenses fe
+  JOIN friends f ON f.id = fe.friend_id
+  WHERE fe.user_id = ? AND f.id = ? 
+
+    
+`, [req.params.user_id,req.params.friend_id]);
+
+
+ res.json(result);
+  });
+
+
+
+
+
 
 module.exports = {
   DeleteFriendExpenses,
@@ -146,4 +212,8 @@ module.exports = {
   pendingToPay,
   RecentActivity,
   detailedPendingToCollect,
+  detailedPendingToPay,
+  PendingToCollectEachFriend,
+  PendingToPayEachFriend,
+  friendsDetailsPage
 };
