@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { LayoutDashboard, Wallet, Users, Clock, User, LogOut, Menu } from "lucide-react";
-import Charts from "./charts";
+import Charts from "./Charts";
 import Main1 from "./Main1";
 
 function Dashboard() {

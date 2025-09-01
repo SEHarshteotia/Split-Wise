@@ -16,6 +16,9 @@ app.use('/api/users',require("./routes/userRoute"));
 app.use('/api/expenses',require("./routes/expensesRoute"));
 app.use('/api/friends',require("./routes/friendsRoute"));
 app.use('/api/friends_expenses',require("./routes/friendsExpensesRoute"));
+app.use('/api/groups',require("./routes/gro_upRoute"));
+app.use('/api/group',require("./routes/groupMembersRoute"));
+app.use('/api/group-expenses',require("./routes/groupExpensesRoute"));
 app.use(errorHandler);
  
 
