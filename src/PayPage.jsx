@@ -14,7 +14,7 @@ function PayPage() {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:5000/api/friends_expenses/${userId}/pay/details/each`
+          `${import.meta.env.VITE_BACKEND_URL}/friends_expenses/${userId}/pay/details/each`
         );
         if (!response.ok) throw new Error("failed to fetch");
         const data = await response.json();

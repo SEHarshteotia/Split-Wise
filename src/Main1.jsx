@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Main1() {
   const navigate = useNavigate();
-  const [TotalExpenses, setTotalExpenses] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const [showIndividualForm, setShowIndividualForm] = useState(false);
   const [amount, setAmount] = useState(0);
@@ -55,7 +55,7 @@ function Main1() {
   useEffect(() => {
     const fetchTotal = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/expenses/${userId}/total`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/expenses/${userId}/total`);
         if (!response.ok) throw new Error("Failed to fetch total expense");
         const Data = await response.json(); 
         setTotalExpenses(Data.total);
@@ -72,7 +72,7 @@ function Main1() {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/friends/${userId}`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/friends/${userId}`);
         if (!response.ok) throw new Error("Failed to fetch friends");
         const data = await response.json();
         SetFriends(data);
@@ -87,12 +87,12 @@ function Main1() {
   useEffect(() => {
     const fetchPending = async () => {
       try {
-        const collectRes = await fetch(`http://localhost:5000/api/friends_expenses/${userId}/collect`);
+        const collectRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/friends_expenses/${userId}/collect`);
         if (!collectRes.ok) throw new Error("Failed to fetch collect amount");
         const collectData = await collectRes.json();
         setPendingCollect(collectData.total_to_collect);
 
-        const pendingRes = await fetch(`http://localhost:5000/api/friends_expenses/${userId}/pay`);
+        const pendingRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/friends_expenses/${userId}/pay`);
         if (!pendingRes.ok) throw new Error("Failed to fetch pay amount");
         const pendingData = await pendingRes.json();
         setPendingPay(pendingData.total_to_pay);
@@ -108,7 +108,7 @@ function Main1() {
   // Fetch recent activity
   const fetchRecentActivity = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/friends_expenses/${userId}/recent`);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/friends_expenses/${userId}/recent`);
       if (!res.ok) throw new Error("Failed to fetch recent activity");
       const data = await res.json();
       setRecentActivity(data.slice(0, 5));
@@ -124,7 +124,7 @@ function Main1() {
   const handleIndividualSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/expenses", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/expenses`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: userId, amount: parseFloat(amount), da_te: date, category }),
@@ -172,7 +172,7 @@ function Main1() {
         payment_type: paymentType,
       };
 
-      const response = await fetch(`http://localhost:5000/api/friends_expenses`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/friends_expenses`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(expenseData),
@@ -235,7 +235,7 @@ return (
       {/* Total Expenses */}
       <div className="bg-gradient-to-tr from-blue-600 to-blue-500 text-white p-8 rounded-2xl shadow-xl hover:scale-105 transition transform">
         <h2 className="text-blue-100 text-lg">Total Expenses</h2>
-        <p className="text-4xl font-extrabold mt-2">₹{TotalExpenses}</p>
+        <p className="text-4xl font-extrabold mt-2">₹{totalExpenses}</p>
         <button
           onClick={() => {
             setShowPopup(true);
@@ -560,7 +560,7 @@ return (
         onSubmit={async (e) => {
           e.preventDefault();
           try {
-            const response = await fetch("http://localhost:5000/api/friends", {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/friends`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ user_id: userId, friend_name: newFriendName }),

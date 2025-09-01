@@ -13,7 +13,7 @@ function Login() {
     console.log("Password:", Password);
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -26,10 +26,13 @@ function Login() {
 
       if (response.ok) {
         localStorage.setItem("token",data.token);
-        localStorage.setItem("user", JSON.stringify(data));
+        localStorage.setItem("user", JSON.stringify({ id: data.id,
+  name: data.name,
+  email: data.email}));
         setMessage("Login successful!");
         setTimeout(() => navigate("/dashboard"), 2000);
         console.log("Logged in user data:", data);
+        console.log("Stored user:", localStorage.getItem("user"));
       } else {
         setMessage(data.message || "Login failed");
       }

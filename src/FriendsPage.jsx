@@ -14,7 +14,7 @@ function FriendsPage() {
     const fetchFriends = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/api/friends/${userId}`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/friends/${userId}`);
         if (!response.ok) throw new Error("Failed to fetch friends");
         const data = await response.json();
         setFriends(data);

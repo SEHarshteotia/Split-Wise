@@ -13,7 +13,7 @@ function FriendsDetailsPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/friends_expenses/${user_id}/details/${friend_id}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/friends_expenses/${user_id}/details/${friend_id}`
       );
       if (!response.ok) throw new Error("Failed to fetch transactions");
 

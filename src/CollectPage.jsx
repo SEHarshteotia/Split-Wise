@@ -14,7 +14,7 @@ function CollectPage() {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:5000/api/friends_expenses/${userId}/collect/details/each`
+          `${import.meta.env.VITE_BACKEND_URL}/api/friends_expenses/${userId}/collect/details/each`
         );
         if (!response.ok) throw new Error("failed to fetch");
         const data = await response.json();
